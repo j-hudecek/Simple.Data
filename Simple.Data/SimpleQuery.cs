@@ -197,17 +197,17 @@
         /// <returns>A new <see cref="SimpleQuery"/> which will select only the specified columns.</returns>
         public SimpleQuery ReplaceSelect(IEnumerable<SimpleReference> columns)
         {
-            return new SimpleQuery(this, _clauses.Where(c => !(c is SelectClause)).Append(new SelectClause(columns)).ToArray());
+            return new SimpleQuery(this, _clauses.Where(c => !(c is SelectClause)).AppendItem(new SelectClause(columns)).ToArray());
         }
 
         /// <summary>
-        /// Alters the query to lock the rows for update. 
+        /// Alters the query to lock the rows for update.
         /// </summary>
         /// <param name="skipLockedRows">Indicates whether the selection should skip rows already locked</param>
         /// <returns>A new <see cref="SimpleQuery"/> which will perform locking on the selected rows</returns>
         public SimpleQuery ForUpdate(bool skipLockedRows)
         {
-            return new SimpleQuery(this, _clauses.Where(c => !(c is ForUpdateClause)).Append(new ForUpdateClause(skipLockedRows)).ToArray());
+            return new SimpleQuery(this, _clauses.Where(c => !(c is ForUpdateClause)).AppendItem(new ForUpdateClause(skipLockedRows)).ToArray());
         }
 
         /// <summary>
@@ -228,7 +228,7 @@
         public SimpleQuery ReplaceWhere(SimpleExpression criteria)
         {
             return new SimpleQuery(this,
-                                   _clauses.Where(c => !(c is WhereClause)).Append(new WhereClause(criteria)).ToArray());
+                                   _clauses.Where(c => !(c is WhereClause)).AppendItem(new WhereClause(criteria)).ToArray());
         }
 
         public SimpleQuery Where(SimpleExpression criteria)

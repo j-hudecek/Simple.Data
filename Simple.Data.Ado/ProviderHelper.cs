@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
-using System.ComponentModel.Composition.Hosting;
+using System.Composition;
+using System.Composition.Hosting;
 using System.Configuration;
 using System.Data.OleDb;
 using System.Linq;
@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 
 namespace Simple.Data.Ado
 {
+    using System.Composition.Hosting.Core;
     using Schema;
 
     public class ProviderHelper
@@ -38,12 +39,12 @@ namespace Simple.Data.Ado
             {
                 return GetProviderByFilename(dataSource);
             }
-            
+
             var provider = ComposeProvider();
             provider.SetConnectionString(token.ConnectionString);
             return provider;
         }
-            
+
         internal static string GetDataSourceName(string connectionString)
         {
             var match = Regex.Match(connectionString, @"data source=(.*?)(;|\z)");
@@ -84,13 +85,14 @@ namespace Simple.Data.Ado
 
         public IConnectionProvider GetProviderByConnectionName(string connectionName, string schemaName = null)
         {
-            var connectionSettings = ConfigurationManager.ConnectionStrings[connectionName];
+            throw new NotImplementedException();
+            /*var connectionSettings = ConfigurationManager.ConnectionStrings[connectionName];
             if (connectionSettings == null)
             {
                 throw new ArgumentOutOfRangeException("connectionName");
             }
 
-            return GetProviderByConnectionString(connectionSettings.ConnectionString, connectionSettings.ProviderName, schemaName);
+            return GetProviderByConnectionString(connectionSettings.ConnectionString, connectionSettings.ProviderName, schemaName);*/
         }
 
         public IConnectionProvider GetProviderByConnectionString(string connectionString, string providerName, string schemaName = null)
@@ -121,7 +123,7 @@ namespace Simple.Data.Ado
                 schemaConnectionProvider.SetSchema(token.SchemaName);
 
             return provider;
-            
+
         }
 
         public T GetCustomProvider<T>(IConnectionProvider connectionProvider)
@@ -132,12 +134,11 @@ namespace Simple.Data.Ado
 
         private static Object GetCustomProviderExport<T>(Assembly assembly)
         {
-            using (var assemblyCatalog = new AssemblyCatalog(assembly))
+            var configuration = new ContainerConfiguration().WithAssembly(assembly);
+            using (var container = configuration.CreateContainer())
             {
-                using (var container = new CompositionContainer(assemblyCatalog))
-                {
-                    return container.GetExportedValueOrDefault<T>();
-                }
+                container.TryGetExport<T>(out var obj);
+                return obj;
             }
         }
 
@@ -150,19 +151,18 @@ namespace Simple.Data.Ado
             return null;
         }
 
-        public T GetCustomProvider<T>(ISchemaProvider schemaProvider)
+        public T GetCustomProvider<T>(ISchemaProvider schemaProvider) where T : class
         {
             return (T)_customProviderCache.GetOrAdd(typeof(T), t => GetCustomProviderExport<T>(schemaProvider));
         }
 
-        private static T GetCustomProviderExport<T>(ISchemaProvider schemaProvider)
+        private static T GetCustomProviderExport<T>(ISchemaProvider schemaProvider) where T : class
         {
-            using (var assemblyCatalog = new AssemblyCatalog(schemaProvider.GetType().Assembly))
+            var configuration = new ContainerConfiguration().WithAssembly(schemaProvider.GetType().Assembly);
+            using (var container = configuration.CreateContainer())
             {
-                using (var container = new CompositionContainer(assemblyCatalog))
-                {
-                    return container.GetExportedValueOrDefault<T>();
-                }
+                container.TryGetExport<T>(out var obj);
+                return obj;
             }
         }
 
@@ -267,7 +267,7 @@ namespace Simple.Data.Ado
             }
 
             /// <summary>
-            /// Serves as a hash function for a particular type. 
+            /// Serves as a hash function for a particular type.
             /// </summary>
             /// <returns>
             /// A hash code for the current <see cref="T:System.Object"/>.

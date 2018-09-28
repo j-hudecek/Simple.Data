@@ -1,5 +1,6 @@
 # Simple.Data
 A lightweight, dynamic data access component for .NET, written in C#.
+Currently supports .NET core 2.1 for SqlServer.
 ## What is it?
 Prompted by the need for an easy-to-use database access component which prevents SQL injection attacks while not requiring lots of boilerplate ADO.NET code or a pre-generated ORM model. Inspired by Ruby's ActiveRecord and DataMapper gems.
 

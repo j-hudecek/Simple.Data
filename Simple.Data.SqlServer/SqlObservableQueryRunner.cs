@@ -5,9 +5,10 @@ using System.Text;
 
 namespace Simple.Data.SqlServer
 {
-    using System.ComponentModel.Composition;
+    using System.Composition;
     using System.Data;
     using System.Data.SqlClient;
+    using System.Threading.Tasks;
     using Ado;
 
     [Export(typeof(IObservableQueryRunner))]
@@ -40,34 +41,31 @@ namespace Simple.Data.SqlServer
                     _connection.Open();
                 }
 
-                _command.BeginExecuteReader(ExecuteReaderCompleted, observer);
+                Task.Run(async () =>
+                {
+                    try
+                    {
+                        using (var reader = await _command.ExecuteReaderAsync())
+                        {
+                            if (_index == null)
+                                _index = reader.CreateDictionaryIndex();
+                            while (reader.Read())
+                            {
+                                observer.OnNext(reader.ToDictionary(_index));
+                            }
+                        }
+                        observer.OnCompleted();
+                    }
+                    catch (Exception ex)
+                    {
+                        observer.OnError(ex);
+                    }
+                });
 
                 return new ActionDisposable(() =>
                                                 {
                                                     using (_connection) using (_command) { }
                                                 });
-            }
-
-            private void ExecuteReaderCompleted(IAsyncResult ar)
-            {
-                var observer = ar.AsyncState as IObserver<IDictionary<string, object>>;
-                if (observer == null) throw new InvalidOperationException();
-                try
-                {
-                    using (var reader = _command.EndExecuteReader(ar))
-                    {
-                        if (_index == null) _index = reader.CreateDictionaryIndex();
-                        while (reader.Read())
-                        {
-                            observer.OnNext(reader.ToDictionary(_index));
-                        }
-                    }
-                    observer.OnCompleted();
-                }
-                catch (Exception ex)
-                {
-                    observer.OnError(ex);
-                }
             }
         }
     }

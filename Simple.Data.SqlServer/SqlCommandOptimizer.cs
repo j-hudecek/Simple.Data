@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Simple.Data.SqlServer
 {
-    using System.ComponentModel.Composition;
+    using System.Composition;
     using System.Data.SqlClient;
     using System.Text.RegularExpressions;
     using Ado;

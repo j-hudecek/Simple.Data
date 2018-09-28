@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -28,7 +28,7 @@ namespace Simple.Data.SqlServer
             }
             insertSql.AppendFormat("INSERT INTO {0} ({1})", table.QualifiedName, columnList);
             insertSql.AppendFormat(" VALUES ({0})", valueList);
-            
+
             if (identityInsert)
             {
                 insertSql.AppendFormat("; SET IDENTITY_INSERT {0} OFF; ", table.QualifiedName);

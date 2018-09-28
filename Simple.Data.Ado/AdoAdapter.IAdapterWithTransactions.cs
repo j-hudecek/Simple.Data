@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.Composition;
+    using System.Composition;
     using System.Data;
     using System.Data.SqlClient;
     using System.Linq;

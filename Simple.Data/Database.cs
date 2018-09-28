@@ -31,7 +31,7 @@ namespace Simple.Data
             if (_loadedConfig)
                 return;
             _loadedConfig = true;
-            _configuration = (SimpleDataConfigurationSection)ConfigurationManager.GetSection("simpleData/simpleDataConfiguration");
+            _configuration = new SimpleDataConfigurationSection();
             if (_configuration != null)
             {
                 SimpleDataTraceSources.TraceSource.TraceEvent(TraceEventType.Warning, SimpleDataTraceSources.ObsoleteWarningMessageId,

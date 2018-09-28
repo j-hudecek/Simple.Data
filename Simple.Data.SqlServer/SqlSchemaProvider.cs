@@ -161,7 +161,7 @@ namespace Simple.Data.SqlServer
 
         private DataTable GetColumnsDataTable(Table table)
         {
-            const string columnSelect = @"SELECT name, is_identity, type_name(system_type_id) as type_name, max_length from sys.columns 
+            const string columnSelect = @"SELECT name, is_identity, type_name(system_type_id) as type_name, max_length from sys.columns
 where object_id = object_id(@tableName, 'TABLE') or object_id = object_id(@tableName, 'VIEW') order by column_id";
             var @tableName = new SqlParameter("@tableName", SqlDbType.NVarChar, 128);
             @tableName.Value = string.Format("[{0}].[{1}]", table.Schema, table.ActualName);
@@ -170,12 +170,25 @@ where object_id = object_id(@tableName, 'TABLE') or object_id = object_id(@table
 
         private DataTable GetPrimaryKeys()
         {
-            return SelectToDataTable(Properties.Resources.PrimaryKeySql);
+            return SelectToDataTable(@"select kcu.TABLE_SCHEMA, kcu.TABLE_NAME, kcu.CONSTRAINT_NAME, tc.CONSTRAINT_TYPE, kcu.COLUMN_NAME, kcu.ORDINAL_POSITION
+  from INFORMATION_SCHEMA.TABLE_CONSTRAINTS as tc
+  join INFORMATION_SCHEMA.KEY_COLUMN_USAGE as kcu
+    on kcu.CONSTRAINT_SCHEMA = tc.CONSTRAINT_SCHEMA
+   and kcu.CONSTRAINT_NAME = tc.CONSTRAINT_NAME
+   and kcu.TABLE_SCHEMA = tc.TABLE_SCHEMA
+   and kcu.TABLE_NAME = tc.TABLE_NAME
+ where tc.CONSTRAINT_TYPE = 'PRIMARY KEY'");
         }
 
         private DataTable GetForeignKeys()
         {
-            return SelectToDataTable(Properties.Resources.ForeignKeysSql);
+            return SelectToDataTable(@"select rc.CONSTRAINT_NAME, fkcu.TABLE_SCHEMA, fkcu.TABLE_NAME, fkcu.COLUMN_NAME,
+pkcu.TABLE_SCHEMA AS UNIQUE_TABLE_SCHEMA, pkcu.TABLE_NAME AS UNIQUE_TABLE_NAME, pkcu.COLUMN_NAME AS UNIQUE_COLUMN_NAME,
+fkcu.ORDINAL_POSITION
+FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS rc
+JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE fkcu ON rc.CONSTRAINT_NAME = fkcu.CONSTRAINT_NAME
+JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE pkcu ON rc.UNIQUE_CONSTRAINT_NAME = pkcu.CONSTRAINT_NAME
+WHERE fkcu.ORDINAL_POSITION = pkcu.ORDINAL_POSITION");
         }
 
         private DataTable GetPrimaryKeys(string tableName)

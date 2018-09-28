@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Simple.Data.Ado
 {
-    using System.ComponentModel.Composition;
+    using System.Composition;
 
     [Export(typeof(OptimizingDelegateFactory))]
     public class AdoOptimizingDelegateFactory : OptimizingDelegateFactory

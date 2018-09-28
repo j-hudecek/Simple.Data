@@ -8,13 +8,8 @@ namespace Simple.Data
     using System.Configuration;
     using System.Diagnostics;
 
-    public class SimpleDataConfigurationSection : ConfigurationSection
+    public class SimpleDataConfigurationSection
     {
-        [ConfigurationProperty("traceLevel", DefaultValue = TraceLevel.Info, IsRequired = false)]
-        public TraceLevel TraceLevel
-        {
-            get { return (TraceLevel) this["traceLevel"]; }
-            set { this["traceLevel"] = value; }
-        }
+        public TraceLevel TraceLevel => TraceLevel.Info;
     }
 }
