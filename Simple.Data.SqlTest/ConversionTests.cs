@@ -10,7 +10,7 @@ namespace Simple.Data.SqlTest
     [TestFixture]
     public class ConversionTests
     {
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void Setup()
         {
             DatabaseHelper.Reset();

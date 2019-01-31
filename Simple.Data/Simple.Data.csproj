@@ -1,9 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <Authors>Mark Rendle</Authors>
+    <PackageIconUrl>http://simplefx.org/images/simpledata100x100.png</PackageIconUrl>
+    <PackageId>Simple.Data.Core</PackageId>
+    <PackageLicenseUrl>http://www.opensource.org/licenses/mit-license.php</PackageLicenseUrl>
+    <PackageProjectUrl>http://github.com/markrendle/Simple.Data</PackageProjectUrl>
+    <PackageTags>sql database data ado .net40</PackageTags>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
   </PropertyGroup>
-
   <ItemGroup>
     <None Remove="app.config" />
     <None Remove="NugetPack.cmd" />
@@ -12,14 +17,13 @@
     <None Remove="Simple.Data.dll.config" />
     <None Remove="Simple.Data.nuspec" />
   </ItemGroup>
-
   <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
-
   <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
     <PackageReference Include="System.Composition" Version="1.2.0" />
+    <PackageReference Include="System.Dynamic.Runtime" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
   </ItemGroup>
-
 </Project>

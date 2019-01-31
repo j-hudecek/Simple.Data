@@ -12,7 +12,7 @@ namespace Simple.Data.SqlTest
     [TestFixture]
     public class InsertTests
     {
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void Setup()
         {
             DatabaseHelper.Reset();

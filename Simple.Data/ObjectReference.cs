@@ -18,7 +18,7 @@ namespace Simple.Data
         private readonly ObjectReference _owner;
         private readonly DataStrategy _dataStrategy;
 
-        internal ObjectReference(string name) : this(name, null, null, null)
+        public ObjectReference(string name) : this(name, null, null, null)
         {
         }
 

@@ -218,13 +218,12 @@
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void SetIndexerBeyondSizeOfListShouldThrowException()
         {
+
             var target = CreateTarget();
             var entry0 = CreateEntry(0);
-
-            target[0] = entry0;
+            Assert.Throws<ArgumentOutOfRangeException>(() => target[0] = entry0);
         }
     }
 }

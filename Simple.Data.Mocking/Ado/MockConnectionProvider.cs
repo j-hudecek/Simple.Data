@@ -6,7 +6,7 @@ using Simple.Data.Ado.Schema;
 
 namespace Simple.Data.Mocking.Ado
 {
-    using System.ComponentModel.Composition;
+    using System.Composition;
 
     [Export("System.Data.Mock", typeof(IConnectionProvider))]
     public class MockConnectionProvider : IConnectionProvider

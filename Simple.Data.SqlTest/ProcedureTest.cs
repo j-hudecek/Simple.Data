@@ -8,7 +8,7 @@ namespace Simple.Data.SqlTest
     [TestFixture]
     public class ProcedureTest
     {
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void Setup()
         {
             DatabaseHelper.Reset();

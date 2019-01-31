@@ -13,7 +13,7 @@ namespace Simple.Data.SqlTest
     [SetUpFixture]
     public class SetupFixture
     {
-        [SetUp]
+        [OneTimeSetUp]
         public void CreateStoredProcedures()
         {
             var provider = new SqlServer.SqlConnectionProvider();

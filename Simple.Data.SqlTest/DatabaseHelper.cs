@@ -18,7 +18,7 @@ namespace Simple.Data.SqlTest
 #if(MONO)
 			return "Data Source=10.37.129.4;Initial Catalog=SimpleTest;User ID=SimpleUser;Password=SimplePassword";
 #else
-            return Environment.GetEnvironmentVariable("SIMPLETESTDB") ?? Properties.Settings.Default.ConnectionString;
+            return Environment.GetEnvironmentVariable("SIMPLETESTDB") ?? "Data Source=localhost;Initial Catalog=SimpleTest;Integrated Security=True";
 #endif
         }
 		

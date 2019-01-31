@@ -12,7 +12,7 @@
         {
             var actual = new UnresolvableObjectException();
             Assert.IsNotNull(actual);
-            Assert.IsNullOrEmpty(actual.ObjectName);
+            Assert.IsTrue(String.IsNullOrEmpty(actual.ObjectName));
         }
 
         [Test]

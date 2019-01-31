@@ -45,7 +45,7 @@ namespace Simple.Data.Ado
             return provider;
         }
 
-        internal static string GetDataSourceName(string connectionString)
+        public static string GetDataSourceName(string connectionString)
         {
             var match = Regex.Match(connectionString, @"data source=(.*?)(;|\z)");
             if (match != null && match.Groups.Count > 1)
@@ -166,7 +166,7 @@ namespace Simple.Data.Ado
             }
         }
 
-        internal static bool TryLoadAssemblyUsingAttribute(string connectionString, string providerName, out IConnectionProvider connectionProvider)
+        public static bool TryLoadAssemblyUsingAttribute(string connectionString, string providerName, out IConnectionProvider connectionProvider)
         {
             var attributes = LoadAssemblyAttributes();
             if (attributes.Count == 0)

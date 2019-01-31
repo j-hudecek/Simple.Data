@@ -13,10 +13,9 @@
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentException))]
         public void CreateWithAnonymousObjectWithoutConnectionStringThrowsArgumentException()
         {
-            CreateTarget().Create(new { X = "" });
+            Assert.Throws<ArgumentException>(() => CreateTarget().Create(new { X = "" }));
         }
 
         [Test]

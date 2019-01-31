@@ -5,7 +5,7 @@ namespace Simple.Data
     using System.Collections.Generic;
     using System.Linq;
 
-    internal static class ConcreteCollectionTypeCreator
+    public static class ConcreteCollectionTypeCreator
     {
         private static readonly List<Creator> _creators = new List<Creator>
                                                               {
@@ -24,7 +24,7 @@ namespace Simple.Data
             return _creators.First(c => c.IsCollectionType(type)).TryCreate(type, items, out result);
         }
 
-        internal abstract class Creator
+        public abstract class Creator
         {
             public abstract bool IsCollectionType(Type type);
 

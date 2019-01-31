@@ -32,14 +32,16 @@
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentException))]
         public void AddDuplicateKeyValuePairShouldThrow()
         {
             var target = CreateTarget();
             var entry = CreateEntry(0);
 
-            target.Add(entry);
-            target.Add(entry);
+            Assert.Throws<ArgumentException>(() =>
+            {
+                target.Add(entry);
+                target.Add(entry);
+            });
         }
 
         [Test]
@@ -56,14 +58,16 @@
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentException))]
         public void AddDuplicateKeyAndValueShouldThrow()
         {
             var target = CreateTarget();
             var entry = CreateEntry(0);
 
-            target.Add(entry.Key, entry.Value);
-            target.Add(entry.Key, entry.Value);
+            Assert.Throws<ArgumentException>(() =>
+            {
+                target.Add(entry.Key, entry.Value);
+                target.Add(entry.Key, entry.Value);
+            });
         }
 
         [Test]
@@ -275,11 +279,10 @@
 
 
         [Test]
-        [ExpectedException(typeof(KeyNotFoundException))]
         public void IndexerShouldThrowWithInvalidKey()
         {
             var target = CreateTarget();
-            var x = target["INVALIDKEY"];
+            Assert.Throws<KeyNotFoundException>(() => target["INVALIDKEY"].ToString());
         }
     }
 }

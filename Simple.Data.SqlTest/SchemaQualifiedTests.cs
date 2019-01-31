@@ -10,7 +10,7 @@ namespace Simple.Data.SqlTest
     [TestFixture]
     class SchemaQualifiedTests
     {
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void Setup()
         {
             DatabaseHelper.Reset();

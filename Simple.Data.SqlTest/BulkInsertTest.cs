@@ -9,7 +9,7 @@ namespace Simple.Data.SqlTest
     [TestFixture]
     public class BulkInsertTest
     {
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void Setup()
         {
             DatabaseHelper.Reset();

@@ -6,7 +6,7 @@ using Simple.Data.Extensions;
 
 namespace Simple.Data.Ado.Schema
 {
-    class TableCollection : Collection<Table>
+    public class TableCollection : Collection<Table>
     {
         public TableCollection()
         {

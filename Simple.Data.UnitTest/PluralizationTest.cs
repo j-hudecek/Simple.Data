@@ -1,7 +1,6 @@
 ﻿#if(!MONO)
 namespace Simple.Data.UnitTest
 {
-    using System.Data.Entity.Design.PluralizationServices;
     using System.Globalization;
     using Extensions;
     using NUnit.Framework;
@@ -9,7 +8,7 @@ namespace Simple.Data.UnitTest
     [TestFixture]
     public class PluralizationTest
     {
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void FixtureSetup()
         {
             Database.SetPluralizer(new EntityPluralizer());
@@ -115,24 +114,23 @@ namespace Simple.Data.UnitTest
 
     class EntityPluralizer : IPluralizer
     {
-        private readonly PluralizationService _pluralizationService =
-            PluralizationService.CreateService(new CultureInfo("en"));
+        private readonly Pluralize.NET.Core.Pluralizer _pluralizationService = new Pluralize.NET.Core.Pluralizer();
 
         public bool IsPlural(string word)
         {
-            return _pluralizationService.IsPlural(word);
+            return (_pluralizationService.Pluralize(word) == word);
         }
 
         public bool IsSingular(string word)
         {
-            return _pluralizationService.IsSingular(word);
+            return (_pluralizationService.Singularize(word) == word); ;
         }
 
         public string Pluralize(string word)
         {
             bool upper = (word.IsAllUpperCase());
             word = _pluralizationService.Pluralize(word);
-            return upper ? word.ToUpper(_pluralizationService.Culture) : word;
+            return upper ? word.ToUpper() : word;
         }
 
         public string Singularize(string word)

@@ -11,7 +11,7 @@ namespace Simple.Data.SqlTest
     [TestFixture]
     public class QueryTest
     {
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void Setup()
         {
             DatabaseHelper.Reset();
@@ -346,7 +346,7 @@ namespace Simple.Data.SqlTest
             Assert.AreEqual(1, orderItems.Count);
         }
 
-        [Test, Ignore]
+        [Test, Ignore("no idea why")]
         public void FindAllWithClauseWithNestedDetailTable()
         {
             var db = DatabaseHelper.Open();

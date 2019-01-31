@@ -6,7 +6,7 @@ using Simple.Data.Extensions;
 
 namespace Simple.Data
 {
-    class AdapterFactory : IAdapterFactory
+    public class AdapterFactory : IAdapterFactory
     {
         private readonly Composer _composer;
 

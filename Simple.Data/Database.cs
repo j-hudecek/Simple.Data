@@ -84,7 +84,7 @@ namespace Simple.Data
         /// Initializes a new instance of the <see cref="Database"/> class.
         /// </summary>
         /// <param name="adapter">The adapter to use for data access.</param>
-        internal Database(Adapter adapter)
+        public Database(Adapter adapter)
         {
             _adapter = adapter;
             _databaseRunner = new DatabaseRunner(_adapter);

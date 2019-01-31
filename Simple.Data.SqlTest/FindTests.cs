@@ -18,7 +18,7 @@ namespace Simple.Data.SqlTest
     [TestFixture]
     public class FindTests
     {
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void Setup()
         {
             DatabaseHelper.Reset();

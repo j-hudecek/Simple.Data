@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Simple.Data
 {
-    class CachingAdapterFactory : AdapterFactory
+    public class CachingAdapterFactory : AdapterFactory
     {
         public CachingAdapterFactory()
         {

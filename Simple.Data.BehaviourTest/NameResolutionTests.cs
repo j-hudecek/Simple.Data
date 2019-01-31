@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data.Entity.Design.PluralizationServices;
 using NUnit.Framework;
 using Simple.Data.Ado;
 using Simple.Data.Mocking.Ado;
@@ -77,24 +76,23 @@ namespace Simple.Data.IntegrationTest
 
         class EntityPluralizer : IPluralizer
         {
-            private readonly PluralizationService _pluralizationService =
-                PluralizationService.CreateService(CultureInfo.GetCultureInfo("en-us")); // only English is supported
+            private readonly Pluralize.NET.Core.Pluralizer _pluralizationService = new Pluralize.NET.Core.Pluralizer();
 
             public bool IsPlural(string word)
             {
-                return _pluralizationService.IsPlural(word);
+                return (_pluralizationService.Pluralize(word) == word);
             }
 
             public bool IsSingular(string word)
             {
-                return _pluralizationService.IsSingular(word);
+                return (_pluralizationService.Singularize(word) == word); ;
             }
 
             public string Pluralize(string word)
             {
                 bool upper = (word.IsAllUpperCase());
                 word = _pluralizationService.Pluralize(word);
-                return upper ? word.ToUpper(_pluralizationService.Culture) : word;
+                return upper ? word.ToUpper() : word;
             }
 
             public string Singularize(string word)

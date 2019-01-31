@@ -16,7 +16,7 @@ namespace Simple.Data.Mocking.Test
     {
         private XmlMockAdapter _mockAdapter;
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void MyTestInitialize()
         {
             _mockAdapter =

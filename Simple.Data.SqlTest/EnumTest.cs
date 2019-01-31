@@ -10,7 +10,7 @@ namespace Simple.Data.SqlTest
     [TestFixture]
     public class EnumTest
     {
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void Setup()
         {
             DatabaseHelper.Reset();

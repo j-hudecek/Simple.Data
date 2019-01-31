@@ -131,17 +131,15 @@ namespace Simple.Data.UnitTest
         }
 
         [Test]
-        [ExpectedException(typeof(InvalidOperationException))]
         public void ThenByWithoutOrderByShouldThrow()
         {
-            new SimpleQuery(null, "foo").ThenBy(new ObjectReference("bar"));
+            Assert.Throws<InvalidOperationException>(() =>    new SimpleQuery(null, "foo").ThenBy(new ObjectReference("bar")));
         }
 
         [Test]
-        [ExpectedException(typeof(InvalidOperationException))]
         public void ThenByDescendingWithoutOrderByShouldThrow()
         {
-            new SimpleQuery(null, "foo").ThenByDescending(new ObjectReference("bar"));
+            Assert.Throws<InvalidOperationException>(() => new SimpleQuery(null, "foo").ThenByDescending(new ObjectReference("bar")));
         }
 
         [Test]

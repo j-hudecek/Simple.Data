@@ -1,23 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
     <None Remove="NugetPack.cmd" />
     <None Remove="NugetPush.cmd" />
     <None Remove="Simple.Data.SqlServer.nuspec" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Simple.Data.Ado\Simple.Data.Ado.csproj" />
     <ProjectReference Include="..\Simple.Data\Simple.Data.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.5.1" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.6.0" />
   </ItemGroup>
-
 </Project>
