@@ -45,7 +45,7 @@ namespace Simple.Data
             if (assemblyFile.Length == 0) throw new ArgumentException("Assembly file name is empty.", "assemblyFile");
             try
             {
-                assembly = Assembly.ReflectionOnlyLoadFrom(assemblyFile);
+                assembly = System.Reflection.Assembly.LoadFile(assemblyFile);
                 return true;
             }
             catch (FileNotFoundException)
