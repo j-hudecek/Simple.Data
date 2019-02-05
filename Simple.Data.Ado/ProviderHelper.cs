@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Composition;
 using System.Composition.Hosting;
-using System.Configuration;
-using System.Data.OleDb;
 using System.Linq;
 using System.Reflection;
 using System.IO;
@@ -13,6 +10,7 @@ using System.Text.RegularExpressions;
 namespace Simple.Data.Ado
 {
     using System.Composition.Hosting.Core;
+    using Microsoft.Extensions.Configuration;
     using Schema;
 
     public class ProviderHelper
@@ -85,14 +83,20 @@ namespace Simple.Data.Ado
 
         public IConnectionProvider GetProviderByConnectionName(string connectionName, string schemaName = null)
         {
-            throw new NotImplementedException();
-            /*var connectionSettings = ConfigurationManager.ConnectionStrings[connectionName];
-            if (connectionSettings == null)
+            var builder = new ConfigurationBuilder();
+            builder.SetBasePath(Directory.GetCurrentDirectory());
+            builder.AddJsonFile("appsettings.json");
+
+            var config = builder.Build();
+
+
+            var connectionString = config[connectionName];
+            if (connectionString == null)
             {
                 throw new ArgumentOutOfRangeException("connectionName");
             }
 
-            return GetProviderByConnectionString(connectionSettings.ConnectionString, connectionSettings.ProviderName, schemaName);*/
+            return GetProviderByConnectionString(connectionString, config[connectionName+"Provider"], schemaName);
         }
 
         public IConnectionProvider GetProviderByConnectionString(string connectionString, string providerName, string schemaName = null)
